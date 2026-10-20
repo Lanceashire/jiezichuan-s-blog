@@ -1,0 +1,11 @@
+背景视频：用户提供 castlevania_moonlit_blue_gothic_bg(7).mp4，按用户要求直接用于博客。
+发布文件：dist/assets/moonlit-castle.mp4（H.264，1376×768，15 fps，8 秒，无音轨）。
+仅 remux 为 faststart；封面从原视频提取。未使用图像生成工具重新创作背景。
+
+头像：用户 GitHub 头像，https://avatars.githubusercontent.com/u/237369035?v=4
+字体：Zpix / SolidZORO，https://github.com/SolidZORO/zpix-pixel-font
+字体保持原样；作者许可个人产品免费。
+
+页面依赖：本地 HTML / CSS / JavaScript；在线音乐依赖明月浩空官方播放器服务。
+
+在线音乐：明月浩空官方 HTML5 浮窗播放器，https://myhkw.cn/ 。使用官方免注册公共歌单（demo），依赖官方提供的 jQuery。歌曲与音频在线加载；不存储音频文件。
