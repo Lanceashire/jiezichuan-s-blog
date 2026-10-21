@@ -258,14 +258,14 @@
         ctx.restore();
       }
 
-      // CC0 Gothic Hero by ansimuz. See THIRD-PARTY-NOTICES.md.
+      // User-supplied Shanoa sprite sheet. See THIRD-PARTY-NOTICES.md.
       const heroImage = new Image();
       let heroReady = false;
       canvas.dataset.character = 'loading';
-      heroImage.onload = () => { heroReady = true; canvas.dataset.character = 'ready'; };
-      heroImage.onerror = () => { canvas.dataset.character = 'error'; };
-      heroImage.src = 'assets/characters/gothic-hero.png';
-      const HERO_ANIMATIONS = {"idle": {"width": 38, "height": 48, "count": 4, "pivotX": 19, "pivotY": 48, "frameMs": 130, "x": 0, "y": 0}, "run": {"width": 66, "height": 48, "count": 12, "pivotX": 33, "pivotY": 48, "frameMs": 70, "x": 0, "y": 48}, "jump": {"width": 61, "height": 77, "count": 5, "pivotX": 30, "pivotY": [76, 67, 48, 42, 60], "frameMs": 100, "x": 0, "y": 96}, "attack": {"width": 96, "height": 48, "count": 6, "pivotX": 43, "pivotY": 48, "frameMs": 130, "x": 0, "y": 173}};
+      heroImage.onload = () => { heroReady = true; canvas.dataset.character = 'shanoa-ready'; };
+      heroImage.onerror = () => { canvas.dataset.character = 'shanoa-error'; };
+      heroImage.src = 'assets/characters/shanoa.png';
+      const HERO_ANIMATIONS = {"idle": {"width": 96, "height": 64, "count": 6, "pivotX": 48, "pivotY": 60, "frameMs": 180, "x": 0, "y": 0}, "run": {"width": 96, "height": 64, "count": 5, "pivotX": 48, "pivotY": 60, "frameMs": 60, "x": 0, "y": 64}, "jump": {"width": 96, "height": 64, "count": 6, "pivotX": 48, "pivotY": 60, "frameMs": 100, "x": 0, "y": 128}, "attack": {"width": 96, "height": 64, "count": 6, "pivotX": 48, "pivotY": 60, "frameMs": 110, "x": 0, "y": 192}};
       let heroAction = '';
       let heroElapsed = 0;
 
@@ -286,14 +286,14 @@
         }
         canvas.dataset.spriteFrame = String(frame);
         const pivotY = Array.isArray(clip.pivotY) ? clip.pivotY[frame] : clip.pivotY;
-        const scale = 2;
+        const scale = 3;
         const x = Math.round(px / scale) * scale;
         const y = Math.round(py / scale) * scale;
         ctx.save();
         ctx.translate(x, y);
         if (!player.isJumping) {
           ctx.fillStyle = 'rgba(0,0,0,.5)';
-          ctx.fillRect(-20, -2, 40, 4);
+          ctx.fillRect(-32, -2, 64, 4);
         }
         if (action === 'attack') {
           ctx.strokeStyle = palette.rune;
