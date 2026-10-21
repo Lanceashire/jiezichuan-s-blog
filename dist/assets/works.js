@@ -361,58 +361,57 @@
         ctx.restore();
       }
 
-      function drawShanoaSprite(px, py, facing, walkFrame, isJumping, isAbsorbing, time, palette) {
-        const P = 3;
-        const x = Math.round(px / P) * P;
-        const y = Math.round(py / P) * P;
+      // CC0 Gothic Hero by ansimuz. See THIRD-PARTY-NOTICES.md.
+      const heroImage = new Image();
+      let heroReady = false;
+      canvas.dataset.character = 'loading';
+      heroImage.onload = () => { heroReady = true; canvas.dataset.character = 'ready'; };
+      heroImage.onerror = () => { canvas.dataset.character = 'error'; };
+      heroImage.src = 'assets/characters/gothic-hero.png';
+      const HERO_ANIMATIONS = {"idle": {"width": 38, "height": 48, "count": 4, "pivotX": 19, "pivotY": 48, "frameMs": 130, "x": 0, "y": 0}, "run": {"width": 66, "height": 48, "count": 12, "pivotX": 33, "pivotY": 48, "frameMs": 70, "x": 0, "y": 48}, "jump": {"width": 61, "height": 77, "count": 5, "pivotX": 30, "pivotY": [76, 67, 48, 42, 60], "frameMs": 100, "x": 0, "y": 96}, "attack": {"width": 96, "height": 48, "count": 6, "pivotX": 43, "pivotY": 48, "frameMs": 130, "x": 0, "y": 173}};
+      let heroAction = '';
+      let heroElapsed = 0;
 
+      function drawHeroSprite(px, py, facing, action, dt, time, palette) {
+        if (action !== heroAction) {
+          heroAction = action;
+          heroElapsed = 0;
+          canvas.dataset.animation = action;
+        } else if (!reducedMotion.matches || action !== 'idle') {
+          heroElapsed += dt;
+        }
+        canvas.dataset.facing = facing > 0 ? 'right' : 'left';
+        if (!heroReady) return;
+        const clip = HERO_ANIMATIONS[action];
+        let frame = Math.floor(heroElapsed / clip.frameMs) % clip.count;
+        if (action === 'jump') {
+          frame = heroElapsed < 70 ? 0 : player.vy < -0.003 ? (heroElapsed < 170 ? 1 : 2) : player.vy <= 0.003 ? 3 : 4;
+        }
+        canvas.dataset.spriteFrame = String(frame);
+        const pivotY = Array.isArray(clip.pivotY) ? clip.pivotY[frame] : clip.pivotY;
+        const scale = 2;
+        const x = Math.round(px / scale) * scale;
+        const y = Math.round(py / scale) * scale;
         ctx.save();
         ctx.translate(x, y);
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.65)';
-        ctx.fillRect(-7 * P, -1 * P, 14 * P, 2 * P);
-
-        if (isAbsorbing) {
-          const wingPulse = Math.sin(time * 0.015) * 4;
+        if (!player.isJumping) {
+          ctx.fillStyle = 'rgba(0,0,0,.5)';
+          ctx.fillRect(-20, -2, 40, 4);
+        }
+        if (action === 'attack') {
           ctx.strokeStyle = palette.rune;
           ctx.lineWidth = 2;
           ctx.shadowColor = palette.rune;
-          ctx.shadowBlur = 14;
+          ctx.shadowBlur = 12;
           ctx.beginPath();
-          ctx.arc(0, -14 * P, 12 * P + wingPulse, 0, Math.PI * 2);
+          ctx.arc(0, -42, 40 + Math.sin(time * .015) * 3, 0, Math.PI * 2);
           ctx.stroke();
+          ctx.shadowBlur = 0;
         }
-
         ctx.scale(facing, 1);
-        const oy = Math.round(isJumping ? -2 * P : (Math.sin(walkFrame * 0.35) * 1.2));
-        const hairSway = Math.round(Math.sin(time * 0.006 + walkFrame * 0.2) * 1.5);
-
-        ctx.fillStyle = '#141b2d';
-        ctx.fillRect((-5 - hairSway) * P, (-21 + oy) * P, 6 * P, 11 * P);
-        ctx.fillRect((-7 - hairSway) * P, (-16 + oy) * P, 5 * P, 8 * P);
-
-        const stride = Math.round(Math.sin(walkFrame * 0.45) * 2.5);
-        ctx.fillStyle = '#1c161c';
-        ctx.fillRect((-2 + stride) * P, -8 * P, 2 * P, 8 * P);
-        ctx.fillRect((1 - stride) * P, -8 * P, 2 * P, 8 * P);
-
-        ctx.fillStyle = '#4a121b';
-        ctx.fillRect(-4 * P, (-13 + oy) * P, 8 * P, 6 * P);
-        ctx.fillStyle = '#7a1c29';
-        ctx.fillRect(-3 * P, (-13 + oy) * P, 5 * P, 5 * P);
-
-        ctx.fillStyle = '#1c2230';
-        ctx.fillRect(-2 * P, (-18 + oy) * P, 5 * P, 5 * P);
-        ctx.fillStyle = palette.rune;
-        ctx.fillRect(-1 * P, (-17 + oy) * P, 2 * P, 2 * P);
-
-        ctx.fillStyle = '#f2dec9';
-        ctx.fillRect(-1 * P, (-23 + oy) * P, 4 * P, 4 * P);
-        ctx.fillStyle = '#d9384a';
-        ctx.fillRect(2 * P, (-21 + oy) * P, 1 * P, 1 * P);
-
-        ctx.fillStyle = '#1e2942';
-        ctx.fillRect(-3 * P, (-25 + oy) * P, 6 * P, 3 * P);
-        ctx.fillRect(-2 * P, (-23 + oy) * P, 2 * P, 4 * P);
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(heroImage, clip.x + frame * clip.width, clip.y, clip.width, clip.height,
+          -clip.pivotX * scale, -pivotY * scale, clip.width * scale, clip.height * scale);
         ctx.restore();
       }
 
@@ -535,7 +534,8 @@
         }
         ctx.globalAlpha = 1.0;
 
-        drawShanoaSprite(player.x * W, player.y * H, player.facing, player.walkFrame, player.isJumping, player.isAbsorbing, effectTime, palette);
+        const action = player.isAbsorbing ? 'attack' : player.isJumping ? 'jump' : player.vx !== 0 ? 'run' : 'idle';
+        drawHeroSprite(player.x * W, player.y * H, player.facing, action, dt, effectTime, palette);
       }
 
       function getNormCoords(evt) {

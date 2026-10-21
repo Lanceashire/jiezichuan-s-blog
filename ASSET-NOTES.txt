@@ -12,3 +12,5 @@
 
 Works 密室背景：用户提供 jiezichuan-works-ecclesia.zip 内的 dist/assets/ecclesia-chamber-bg.jpg，保持原图。
 Works 页面：基于用户提供的前端整合，补充手机端排版、键盘与触控支持。
+
+Works 人物：Luis Zuno / ansimuz 的 Gothic Hero，来源为 Gothicvania Patreon's Collection，作者在 OpenGameArt 标为 CC0。共 27 帧，站立 4、奔跑 12、跳跃 5、攻击 6。保留原画像素和配色，按 2 倍整数绘制；来源及许可见 THIRD-PARTY-NOTICES.md。不是夏诺雅原作素材。

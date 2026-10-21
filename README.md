@@ -36,3 +36,5 @@ python3 -m http.server 4173 --directory dist
 ## Works 密室
 
 `dist/assets/works.js` 中的 `CANDLESTICKS` 配置项目标题、简介和链接。点击烛台或下方项目按钮可选择作品；点击画面后可用 A / D 移动、W 跳跃、R 吸印、回车进入作品。手机端可使用方向按钮，场景音效默认关闭。
+
+Works 人物采用 ansimuz 的 CC0 Gothic Hero 逐帧精灵，含站立、奔跑、跳跃和刻印攻击反馈。许可与来源见 [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md)。重新打包人物图集可运行 `python3 scripts/build-works-character.py`（需要 Pillow）；网站运行仍无需构建或安装依赖。
