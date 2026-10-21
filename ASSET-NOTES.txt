@@ -9,3 +9,6 @@
 页面依赖：本地 HTML / CSS / JavaScript；在线音乐依赖明月浩空官方播放器服务。
 
 在线音乐：明月浩空官方 HTML5 浮窗播放器，https://myhkw.cn/ 。使用官方免注册公共歌单（demo），依赖官方提供的 jQuery。歌曲与音频在线加载；不存储音频文件。
+
+Works 密室背景：用户提供 jiezichuan-works-ecclesia.zip 内的 dist/assets/ecclesia-chamber-bg.jpg，保持原图。
+Works 页面：基于用户提供的前端整合，补充手机端排版、键盘与触控支持。
