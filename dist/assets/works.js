@@ -144,6 +144,7 @@
       let activeAltarIdx = 0;
       let hoveredAltarIdx = -1;
       let autoFollowMouse = true;
+      const ALTAR_ACTIVATION_RADIUS = 0.16;
 
 
       const dustMotes = Array.from({ length: 45 }, () => ({
@@ -192,6 +193,20 @@
         if (location.hash !== (idx === 0 ? '' : '#' + item.id)) history.replaceState(null, '', fragment);
         canvas.setAttribute('aria-label', `密室场景，当前作品：${item.title}。点击烛台或按回车打开 GitHub 作品。`);
         if (move) { resetKeys(); autoFollowMouse = true; player.targetX = item.x; }
+      }
+
+      function updateActiveAltarFromPlayer() {
+        let nearestIdx = -1;
+        let nearestDistance = Infinity;
+        CANDLESTICKS.forEach((item, idx) => {
+          const distance = Math.abs(player.x - item.x);
+          if (distance < nearestDistance) {
+            nearestDistance = distance;
+            nearestIdx = idx;
+          }
+        });
+        if (nearestDistance > ALTAR_ACTIVATION_RADIUS || nearestIdx === activeAltarIdx) return;
+        selectWork(nearestIdx, false);
       }
 
       function drawPixelFlame(px, py, scale, time, isResonant, palette) {
@@ -343,6 +358,7 @@
           player.vx = 0;
         }
         player.x = Math.max(0.08, Math.min(0.92, player.x + player.vx));
+        updateActiveAltarFromPlayer();
 
         if (player.isJumping) {
           player.y += player.vy * frameScale;
@@ -589,5 +605,6 @@
       const initialWork = CANDLESTICKS.findIndex(item => '#' + item.id === location.hash);
       selectWork(Math.max(0, initialWork), false);
       player.x = player.targetX = CANDLESTICKS[activeAltarIdx].x;
+      updateActiveAltarFromPlayer();
       requestAnimationFrame(animate);
     })();
