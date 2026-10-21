@@ -1,0 +1,49 @@
+{
+  "name": "Shanoa",
+  "source": "DS _ DSi - Castlevania_ Order of Ecclesia - Playable Characters - Shanoa.png",
+  "sourceSha256": "ef046d455822d638058a3502a7eac69a7601c640aed03f43b2b91bdebc933ca7",
+  "rights": "User-supplied Castlevania: Order of Ecclesia sprite sheet; Castlevania rights remain with KONAMI.",
+  "scale": 3,
+  "animations": {
+    "idle": {
+      "width": 96,
+      "height": 64,
+      "count": 6,
+      "pivotX": 48,
+      "pivotY": 60,
+      "frameMs": 180,
+      "x": 0,
+      "y": 0
+    },
+    "run": {
+      "width": 96,
+      "height": 64,
+      "count": 5,
+      "pivotX": 48,
+      "pivotY": 60,
+      "frameMs": 60,
+      "x": 0,
+      "y": 64
+    },
+    "jump": {
+      "width": 96,
+      "height": 64,
+      "count": 6,
+      "pivotX": 48,
+      "pivotY": 60,
+      "frameMs": 100,
+      "x": 0,
+      "y": 128
+    },
+    "attack": {
+      "width": 96,
+      "height": 64,
+      "count": 6,
+      "pivotX": 48,
+      "pivotY": 60,
+      "frameMs": 110,
+      "x": 0,
+      "y": 192
+    }
+  }
+}
