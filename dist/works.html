@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <meta name="theme-color" content="#0d1015">
   <title>作品 · Lanceashire</title>
-  <meta name="description" content="Lanceashire 的作品与手记。">
+  <meta name="description" content="Lanceashire 的 GitHub 作品。">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/works.css">
@@ -40,10 +40,16 @@
     <div class="works-layout">
       <section class="works-stage" aria-label="烛台密室">
         <div class="chamber-scene">
-          <canvas id="chamber-canvas" width="1376" height="768" tabindex="0" aria-label="密室场景" aria-describedby="chamber-hint">请使用右侧作品目录。</canvas>
+          <canvas id="chamber-canvas" width="1376" height="768" tabindex="0" aria-label="密室场景" aria-describedby="chamber-hint">点击场景中的作品链接，前往 GitHub。</canvas>
+          <nav class="chamber-projects" aria-label="GitHub 作品">
+            <a class="chamber-project" data-work="0" href="https://github.com/Lanceashire/smart-community-" target="_blank" rel="noopener noreferrer" style="--x:14.5%;--y:50%;--w:15.7%;--h:42.5%" aria-label="智慧社区，在新标签页打开 GitHub 仓库" title="ROS 巡检导航与视觉识别"><span class="project-label"><small>01</small> 智慧社区 <span aria-hidden="true">↗</span></span></a>
+            <a class="chamber-project" data-work="1" href="https://github.com/Lanceashire/neuro-notes" target="_blank" rel="noopener noreferrer" style="--x:33%;--y:48.5%;--w:16.8%;--h:35%" aria-label="NeuroNotes，在新标签页打开 GitHub 仓库" title="知识图谱式笔记应用"><span class="project-label"><small>02</small> NeuroNotes <span aria-hidden="true">↗</span></span></a>
+            <a class="chamber-project" data-work="2" href="https://github.com/Lanceashire/garment-accounting" target="_blank" rel="noopener noreferrer" style="--x:56.5%;--y:44%;--w:20.7%;--h:35%" aria-label="记账星，在新标签页打开 GitHub 仓库" title="加工记账与 Excel 导出"><span class="project-label"><small>03</small> 记账星 <span aria-hidden="true">↗</span></span></a>
+            <a class="chamber-project" data-work="3" href="https://github.com/Lanceashire/jiezichuan-s-blog" target="_blank" rel="noopener noreferrer" style="--x:81.5%;--y:50.5%;--w:12%;--h:26.5%" aria-label="夜之手记，在新标签页打开 GitHub 仓库" title="像素哥特风格的个人博客"><span class="project-label"><small>04</small> 夜之手记 <span aria-hidden="true">↗</span></span></a>
+          </nav>
         </div>
         <div class="works-stage-footer">
-          <p id="chamber-hint">点击烛台，选择作品。</p>
+          <p id="chamber-hint">点击烛台，前往 GitHub 作品。</p>
           <details class="works-help">
             <summary>角色操作</summary>
             <div class="works-controls">
@@ -58,19 +64,7 @@
           </details>
         </div>
       </section>
-      <aside class="works-directory" aria-label="作品与手记">
-        <nav class="work-choices" aria-label="作品目录">
-          <button id="work-select-0" type="button" data-work="0" aria-pressed="true"><span class="work-index">01</span><span class="work-name">夜之手记<small>网站</small></span></button>
-          <button id="work-select-1" type="button" data-work="1" aria-pressed="false"><span class="work-index">02</span><span class="work-name">记录过程<small>技术手记</small></span></button>
-          <button id="work-select-2" type="button" data-work="2" aria-pressed="false"><span class="work-index">03</span><span class="work-name">顺手的日常<small>日常手记</small></span></button>
-          <button id="work-select-3" type="button" data-work="3" aria-pressed="false"><span class="work-index">04</span><span class="work-name">GitHub<small>更多项目</small></span></button>
-        </nav>
-        <section id="work-detail" class="work-detail" aria-labelledby="work-select-0">
-          <p id="work-description" aria-live="polite">像素哥特风格的个人博客。</p>
-          <a id="work-link" href="https://github.com/Lanceashire/jiezichuan-s-blog" target="_blank" rel="noopener noreferrer">查看源码 <span aria-hidden="true">↗</span></a>
-        </section>
-        <noscript><p class="works-noscript"><a href="https://github.com/Lanceashire/jiezichuan-s-blog">博客源码</a> · <a href="building-notes.html">记录过程</a> · <a href="quiet-desktop.html">顺手的日常</a> · <a href="https://github.com/Lanceashire">GitHub</a></p></noscript>
-      </aside>
+
     </div>
   </main>
 

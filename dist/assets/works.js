@@ -8,11 +8,11 @@
       const CANDLESTICKS = [
         {
           id: 'altar-01',
-          glyphSymbol: '印',
-          category: '网站',
-          title: '夜之手记',
-          desc: '像素哥特风格的个人博客。',
-          href: 'https://github.com/Lanceashire/jiezichuan-s-blog',
+          glyphSymbol: '巡',
+          category: '机器人',
+          title: '智慧社区',
+          desc: 'ROS 巡检导航与视觉识别。',
+          href: 'https://github.com/Lanceashire/smart-community-',
           linkText: '查看源码',
           external: true,
           x: 0.224,
@@ -32,13 +32,13 @@
         },
         {
           id: 'altar-02',
-          glyphSymbol: '构',
-          category: '技术手记',
-          title: '记录过程',
-          desc: '问题、尝试与解决过程。',
-          href: 'building-notes.html',
-          linkText: '阅读手记',
-          external: false,
+          glyphSymbol: '知',
+          category: '笔记应用',
+          title: 'NeuroNotes',
+          desc: '知识图谱式笔记应用。',
+          href: 'https://github.com/Lanceashire/neuro-notes',
+          linkText: '查看源码',
+          external: true,
           x: 0.412,
           y: 0.625,
           tableBounds: { x0: 0.350, x1: 0.478, y0: 0.565, y1: 0.785 },
@@ -56,13 +56,13 @@
         },
         {
           id: 'altar-03',
-          glyphSymbol: '寂',
-          category: '日常手记',
-          title: '顺手的日常',
-          desc: '工具、桌面与日常折腾。',
-          href: 'quiet-desktop.html',
-          linkText: '阅读手记',
-          external: false,
+          glyphSymbol: '账',
+          category: 'Android 应用',
+          title: '记账星',
+          desc: '加工记账与 Excel 导出。',
+          href: 'https://github.com/Lanceashire/garment-accounting',
+          linkText: '查看源码',
+          external: true,
           x: 0.668,
           y: 0.585,
           tableBounds: { x0: 0.585, x1: 0.752, y0: 0.520, y1: 0.740 },
@@ -82,12 +82,12 @@
         },
         {
           id: 'altar-04',
-          glyphSymbol: '典',
-          category: '更多项目',
-          title: 'GitHub',
-          desc: '代码与开源项目。',
-          href: 'https://github.com/Lanceashire',
-          linkText: '浏览仓库',
+          glyphSymbol: '印',
+          category: '网站',
+          title: '夜之手记',
+          desc: '像素哥特风格的个人博客。',
+          href: 'https://github.com/Lanceashire/jiezichuan-s-blog',
+          linkText: '查看源码',
           external: true,
           x: 0.872,
           y: 0.630,
@@ -112,7 +112,7 @@
       const canvas = document.getElementById('chamber-canvas');
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
-      const choiceButtons = [...document.querySelectorAll('[data-work]')];
+      const projectLinks = [...document.querySelectorAll('[data-work]')];
 
       const bgImg = new Image();
       let bgLoaded = false;
@@ -172,7 +172,7 @@
         }
       }
 
-      // 仅明确打开链接或按回车时进入当前作品。
+      // 烛台原生链接和回车均打开对应 GitHub 作品。
       function navigateToCandlestickProject(item) {
 
         if (item.external) {
@@ -186,20 +186,11 @@
         if (!CANDLESTICKS[idx]) return;
         activeAltarIdx = idx;
         const item = CANDLESTICKS[idx];
-        choiceButtons.forEach((button, i) => button.setAttribute('aria-pressed', String(i === idx)));
-        document.getElementById('work-description').textContent = item.desc;
-        document.getElementById('work-detail').setAttribute('aria-labelledby', `work-select-${idx}`);
-        const link = document.getElementById('work-link');
-        link.replaceChildren(document.createTextNode(item.linkText + ' '));
-        const arrow = document.createElement('span');
-        arrow.textContent = '↗'; arrow.setAttribute('aria-hidden', 'true'); link.append(arrow);
-        link.href = item.href;
-        link.target = item.external ? '_blank' : '_self';
-        link.rel = item.external ? 'noopener noreferrer' : '';
+        projectLinks.forEach((link, i) => { link.dataset.selected = String(i === idx); });
         canvas.dataset.activeAltar = item.id;
         const fragment = idx === 0 ? location.pathname + location.search : '#' + item.id;
         if (location.hash !== (idx === 0 ? '' : '#' + item.id)) history.replaceState(null, '', fragment);
-        canvas.setAttribute('aria-label', `密室场景，当前作品：${item.title}。点击烛台选择，回车打开作品。`);
+        canvas.setAttribute('aria-label', `密室场景，当前作品：${item.title}。点击烛台或按回车打开 GitHub 作品。`);
         if (move) { resetKeys(); autoFollowMouse = true; player.targetX = item.x; }
       }
 
@@ -466,6 +457,7 @@
         const hit = findAltarAt(pt.x, pt.y);
         if (hit !== -1) {
           selectWork(hit);
+          navigateToCandlestickProject(CANDLESTICKS[hit]);
         } else {
           autoFollowMouse = true;
           player.targetX = pt.x;
@@ -542,12 +534,11 @@
       bindDirection('ctrl-left', 'left');
       bindDirection('ctrl-right', 'right');
       document.getElementById('ctrl-jump').addEventListener('click', jump);
-      choiceButtons.forEach((button, idx) => {
-        const item = CANDLESTICKS[idx];
-        const category = document.createElement('small');
-        category.textContent = item.category;
-        button.querySelector('.work-name').replaceChildren(document.createTextNode(item.title), category);
-        button.addEventListener('click', () => selectWork(idx));
+      projectLinks.forEach((link, idx) => {
+        link.addEventListener('mouseenter', () => { hoveredAltarIdx = idx; });
+        link.addEventListener('mouseleave', () => { hoveredAltarIdx = -1; });
+        link.addEventListener('focus', () => selectWork(idx, false));
+        link.addEventListener('click', () => selectWork(idx));
       });
       document.querySelector('.works-help').addEventListener('toggle', resetKeys);
       const initialWork = CANDLESTICKS.findIndex(item => '#' + item.id === location.hash);
