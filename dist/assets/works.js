@@ -534,12 +534,57 @@
       bindDirection('ctrl-left', 'left');
       bindDirection('ctrl-right', 'right');
       document.getElementById('ctrl-jump').addEventListener('click', jump);
+      const tooltip = document.getElementById('work-tooltip');
+      let tooltipIndex = -1;
+      let touchPreview = -1;
+      const projectDetails = [["机器人 · ROS / Gazebo", "巡检导航、地图构建与视觉识别。"], ["应用 · 知识图谱", "把笔记与知识点连接成图谱。"], ["应用 · Android", "加工记账、金额统计与 Excel 导出。"], ["网站 · 个人博客", "代码、随笔与收藏，留在月夜里。"]];
+      function hideProjectInfo() {
+        tooltip.hidden = true;
+        tooltipIndex = -1;
+        hoveredAltarIdx = -1;
+        projectLinks.forEach(link => link.removeAttribute('aria-describedby'));
+      }
+      function showProjectInfo(idx) {
+        const item = CANDLESTICKS[idx];
+        tooltip.querySelector('.tooltip-category').textContent = projectDetails[idx][0];
+        tooltip.querySelector('.tooltip-title').textContent = item.title;
+        tooltip.querySelector('.tooltip-description').textContent = projectDetails[idx][1];
+        tooltip.hidden = false;
+        tooltipIndex = hoveredAltarIdx = idx;
+        projectLinks.forEach((link, i) => {
+          if (i === idx) link.setAttribute('aria-describedby', 'work-tooltip');
+          else link.removeAttribute('aria-describedby');
+        });
+        const scene = canvas.parentElement.getBoundingClientRect();
+        const anchor = projectLinks[idx].getBoundingClientRect();
+        const box = tooltip.getBoundingClientRect();
+        const left = Math.max(12, Math.min(scene.width - box.width - 12, anchor.left - scene.left + anchor.width / 2 - box.width / 2));
+        const top = Math.max(10, anchor.top - scene.top - box.height - 14);
+        tooltip.style.left = left + 'px';
+        tooltip.style.top = top + 'px';
+      }
       projectLinks.forEach((link, idx) => {
-        link.addEventListener('mouseenter', () => { hoveredAltarIdx = idx; });
-        link.addEventListener('mouseleave', () => { hoveredAltarIdx = -1; });
-        link.addEventListener('focus', () => selectWork(idx, false));
-        link.addEventListener('click', () => selectWork(idx));
+        link.addEventListener('pointerenter', event => { if (event.pointerType !== 'touch') showProjectInfo(idx); });
+        link.addEventListener('pointerleave', event => { if (event.pointerType !== 'touch') hideProjectInfo(); });
+        link.addEventListener('focus', () => { selectWork(idx, false); showProjectInfo(idx); });
+        link.addEventListener('blur', hideProjectInfo);
+        link.addEventListener('pointerdown', event => {
+          if (event.pointerType === 'touch' && touchPreview !== idx) {
+            touchPreview = idx;
+            link.dataset.previewOnly = 'true';
+            showProjectInfo(idx);
+          }
+        });
+        link.addEventListener('click', event => {
+          if (link.dataset.previewOnly) { event.preventDefault(); delete link.dataset.previewOnly; return; }
+          selectWork(idx);
+        });
       });
+      document.addEventListener('pointerdown', event => {
+        if (!event.target.closest('.chamber-project')) { touchPreview = -1; hideProjectInfo(); }
+      });
+      document.addEventListener('keydown', event => { if (event.key === 'Escape') { touchPreview = -1; hideProjectInfo(); } });
+      window.addEventListener('resize', () => { if (tooltipIndex !== -1) showProjectInfo(tooltipIndex); });
       document.querySelector('.works-help').addEventListener('toggle', resetKeys);
       const initialWork = CANDLESTICKS.findIndex(item => '#' + item.id === location.hash);
       selectWork(Math.max(0, initialWork), false);
