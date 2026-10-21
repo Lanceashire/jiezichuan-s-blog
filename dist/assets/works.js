@@ -8,16 +8,13 @@
       const CANDLESTICKS = [
         {
           id: 'altar-01',
-          number: '01 / WEBSITE',
-          glyphName: 'Vol Nocturne · 夜之刻印',
           glyphSymbol: '印',
-          category: '个人博客 · Website',
+          category: '网站',
           title: '夜之手记',
-          desc: '像素哥特个人博客。以黑曜石与古铜烛火构筑的私人数字密室，收录代码实践、随笔手记与器物收藏。',
-          tags: ['HTML', 'CSS', 'JavaScript'],
-          href: 'site-notes.html',
-          linkText: '站点记录',
-          external: false,
+          desc: '像素哥特风格的个人博客。',
+          href: 'https://github.com/Lanceashire/jiezichuan-s-blog',
+          linkText: '查看源码',
+          external: true,
           x: 0.224,
           y: 0.645,
           tableBounds: { x0: 0.165, x1: 0.282, y0: 0.580, y1: 0.875 },
@@ -35,15 +32,12 @@
         },
         {
           id: 'altar-02',
-          number: '02 / ARCHITECTURE',
-          glyphName: 'Macir Structura · 构筑之印',
           glyphSymbol: '构',
-          category: '建设笔记 · Engineering',
-          title: '密室建设笔记',
-          desc: '记录《夜之手记》从零构建的静态架构演进、像素哥特排版规范与 GitHub Pages 部署链路。',
-          tags: ['Static Web', 'CSS Grid', 'GitHub Actions'],
+          category: '技术手记',
+          title: '记录过程',
+          desc: '问题、尝试与解决过程。',
           href: 'building-notes.html',
-          linkText: '建设笔记',
+          linkText: '阅读手记',
           external: false,
           x: 0.412,
           y: 0.625,
@@ -62,15 +56,12 @@
         },
         {
           id: 'altar-03',
-          number: '03 / SANCTUM OS',
-          glyphName: 'Dominus Quietum · 静谧主宰',
           glyphSymbol: '寂',
-          category: '沉浸模式 · Interactive',
-          title: '静谧桌面终端',
-          desc: '博客内置的沉浸式暗夜桌面体验与背景音乐巡礼空间，将像素哥特美学与低干扰阅读氛围融为一体。',
-          tags: ['HTML5 Canvas', 'Audio', 'Pixel UI'],
+          category: '日常手记',
+          title: '顺手的日常',
+          desc: '工具、桌面与日常折腾。',
           href: 'quiet-desktop.html',
-          linkText: '静谧桌面',
+          linkText: '阅读手记',
           external: false,
           x: 0.668,
           y: 0.585,
@@ -91,15 +82,12 @@
         },
         {
           id: 'altar-04',
-          number: '04 / REPOSITORY',
-          glyphName: 'Umbra Codex · 暗影法典',
           glyphSymbol: '典',
-          category: '开源代码 · GitHub',
-          title: 'Lanceashire 代码圣殿',
-          desc: '通往 Lanceashire 的 GitHub 开源仓库与完整工程档案，收录个人博客源码与更多前端实践项目。',
-          tags: ['GitHub', 'Open Source', 'Repositories'],
+          category: '更多项目',
+          title: 'GitHub',
+          desc: '代码与开源项目。',
           href: 'https://github.com/Lanceashire',
-          linkText: '前往 GitHub',
+          linkText: '浏览仓库',
           external: true,
           x: 0.872,
           y: 0.630,
@@ -119,59 +107,12 @@
         { x: 0.969, y: 0.547, size: 1.3 }
       ];
 
-      const PALETTES = [
-        { name: '圣教幽蓝', core: '#ffffff', inner: '#7ef9ff', outer: '#2b7de9', glow: 'rgba(92, 225, 230, 0.36)', rune: '#5ce1e6' },
-        { name: '多米纳斯深红', core: '#fff5f5', inner: '#ff6b7b', outer: '#c91e32', glow: 'rgba(217, 56, 74, 0.40)', rune: '#ff5c70' },
-        { name: '古铜暖烛', core: '#fffdf5', inner: '#ffe082', outer: '#e67e22', glow: 'rgba(245, 215, 142, 0.35)', rune: '#f5d78e' }
-      ];
-      let currentPaletteIdx = 0;
-
-      // Web Audio 古钢琴与刻印音效
-      let audioCtx = null;
-      let audioEnabled = false;
-      let bgmInterval = null;
-      let bgmStep = 0;
-      const BAROQUE_NOTES = [
-        293.66, 349.23, 440.00, 587.33, 523.25, 440.00, 349.23, 440.00,
-        277.18, 329.63, 440.00, 554.37, 523.25, 440.00, 329.63, 440.00,
-        261.63, 311.13, 392.00, 523.25, 466.16, 392.00, 311.13, 392.00,
-        220.00, 277.18, 329.63, 440.00, 349.23, 329.63, 277.18, 220.00
-      ];
-
-      function initAudio() {
-        if (!audioCtx) {
-          const AC = window.AudioContext || window.webkitAudioContext;
-          if (AC) audioCtx = new AC();
-        }
-        if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-      }
-
-      function playGlyphChime() {
-        if (!audioEnabled || !audioCtx || audioCtx.state !== 'running') return;
-        try {
-          const now = audioCtx.currentTime;
-          [523.25, 659.25, 1046.5].forEach((f, idx) => {
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(f, now + idx * 0.055);
-            gain.gain.setValueAtTime(0.001, now + idx * 0.055);
-            gain.gain.linearRampToValueAtTime(0.05, now + idx * 0.055 + 0.02);
-            gain.gain.exponentialRampToValueAtTime(0.0008, now + idx * 0.055 + 0.4);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start(now + idx * 0.055);
-            osc.stop(now + idx * 0.055 + 0.42);
-          });
-        } catch (e) {}
-      }
+      const PALETTE = {core:'#ffffff',inner:'#7ef9ff',outer:'#2b7de9',glow:'rgba(92,225,230,.3)',rune:'#5ce1e6'};
 
       const canvas = document.getElementById('chamber-canvas');
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
-      const scene = document.querySelector('.chamber-scene');
-      const followControl = document.getElementById('chk-auto-follow');
-      const floatingPlaque = document.getElementById('floating-plaque');
+      const choiceButtons = [...document.querySelectorAll('[data-work]')];
 
       const bgImg = new Image();
       let bgLoaded = false;
@@ -203,7 +144,7 @@
       let activeAltarIdx = 0;
       let hoveredAltarIdx = -1;
       let autoFollowMouse = true;
-      let lastRenderedAltarIdx = -99;
+
 
       const dustMotes = Array.from({ length: 45 }, () => ({
         x: Math.random(),
@@ -231,9 +172,9 @@
         }
       }
 
-      // 点击烛台后跳转到目标项目地址
+      // 仅明确打开链接或按回车时进入当前作品。
       function navigateToCandlestickProject(item) {
-        playGlyphChime();
+
         if (item.external) {
           window.open(item.href, '_blank', 'noopener,noreferrer');
         } else {
@@ -241,61 +182,26 @@
         }
       }
 
-      function updateFloatingPlaque(idx) {
-        if (idx < 0 || idx >= CANDLESTICKS.length) {
-          floatingPlaque.classList.add('hidden-plaque');
-          floatingPlaque.hidden = true;
-          lastRenderedAltarIdx = -1;
-          return;
-        }
+      function selectWork(idx, move = true) {
+        if (!CANDLESTICKS[idx]) return;
+        activeAltarIdx = idx;
         const item = CANDLESTICKS[idx];
-        floatingPlaque.classList.remove('hidden-plaque');
-        floatingPlaque.hidden = false;
-
-        if (lastRenderedAltarIdx !== idx) {
-          lastRenderedAltarIdx = idx;
-          document.getElementById('plaque-glyph-icon').textContent = item.glyphSymbol;
-          document.getElementById('plaque-number').textContent = item.number;
-          document.getElementById('plaque-glyph-name').textContent = item.glyphName;
-          document.getElementById('plaque-meta-badge').textContent = item.category;
-          document.getElementById('plaque-title').textContent = item.title;
-          document.getElementById('plaque-desc').textContent = item.desc;
-
-          const tagsEl = document.getElementById('plaque-tags');
-          tagsEl.innerHTML = (item.tags || []).map(t => `<span class="plaque-tag">${t}</span>`).join('');
-
-          const linkEl = document.getElementById('plaque-link');
-          linkEl.href = item.href;
-          if (item.external) {
-            linkEl.target = '_blank';
-            linkEl.rel = 'noopener noreferrer';
-          } else {
-            linkEl.removeAttribute('target');
-          }
-          document.getElementById('plaque-link-text').textContent = item.linkText || '查看项目';
-          document.querySelectorAll('#altar-quick-pills button').forEach((button, index) => {
-            button.setAttribute('aria-pressed', String(index === idx));
-          });
-          document.querySelectorAll('.grimoire-card').forEach((card, index) => {
-            card.classList.toggle('active-card', index === idx);
-          });
-          canvas.dataset.activeAltar = item.id;
-          canvas.setAttribute('aria-label', `密室场景，当前作品：${item.title}。方向键或 A、D 移动，W 跳跃，R 吸印，回车进入作品。`);
-          positionPlaque(item);
-
-        }
+        choiceButtons.forEach((button, i) => button.setAttribute('aria-pressed', String(i === idx)));
+        document.getElementById('work-description').textContent = item.desc;
+        document.getElementById('work-detail').setAttribute('aria-labelledby', `work-select-${idx}`);
+        const link = document.getElementById('work-link');
+        link.replaceChildren(document.createTextNode(item.linkText + ' '));
+        const arrow = document.createElement('span');
+        arrow.textContent = '↗'; arrow.setAttribute('aria-hidden', 'true'); link.append(arrow);
+        link.href = item.href;
+        link.target = item.external ? '_blank' : '_self';
+        link.rel = item.external ? 'noopener noreferrer' : '';
+        canvas.dataset.activeAltar = item.id;
+        const fragment = idx === 0 ? location.pathname + location.search : '#' + item.id;
+        if (location.hash !== (idx === 0 ? '' : '#' + item.id)) history.replaceState(null, '', fragment);
+        canvas.setAttribute('aria-label', `密室场景，当前作品：${item.title}。点击烛台选择，回车打开作品。`);
+        if (move) { resetKeys(); autoFollowMouse = true; player.targetX = item.x; }
       }
-
-      function positionPlaque(item = CANDLESTICKS[activeAltarIdx]) {
-        if (!item || !scene.clientWidth) return;
-        const gutter = 12;
-        const center = item.x * scene.clientWidth;
-        const width = floatingPlaque.offsetWidth;
-        floatingPlaque.style.left = Math.max(gutter, Math.min(scene.clientWidth - width - gutter, center - width / 2)) + 'px';
-        const preferredTop = Math.max(8, item.tableBounds.y0 * 100 - 42) / 100 * canvas.clientHeight;
-        floatingPlaque.style.top = Math.max(gutter, Math.min(canvas.clientHeight - floatingPlaque.offsetHeight - gutter, preferredTop)) + 'px';
-      }
-      new ResizeObserver(() => positionPlaque()).observe(scene);
 
       function drawPixelFlame(px, py, scale, time, isResonant, palette) {
         const snap = 2;
@@ -354,7 +260,7 @@
         ctx.fillStyle = palette.core;
         ctx.shadowColor = palette.rune;
         ctx.shadowBlur = 12;
-        ctx.font = 'bold 16px "Noto Serif SC", serif';
+        ctx.font = '16px Zpix, monospace';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(symbol || '印', 0, 1);
@@ -426,7 +332,7 @@
         const effectTime = reducedMotion.matches ? 0 : now;
         const W = canvas.width;
         const H = canvas.height;
-        const palette = PALETTES[currentPaletteIdx];
+        const palette = PALETTE;
 
         const moveSpeed = 0.0026 * (dt / 16.67);
         if (keys.left) {
@@ -464,21 +370,6 @@
           player.isAbsorbing = keys.up;
         }
 
-        let closestIdx = -1;
-        let minDist = 999;
-        CANDLESTICKS.forEach((c, idx) => {
-          const d = Math.abs(player.x - c.x);
-          if (d < 0.105 && d < minDist) {
-            minDist = d;
-            closestIdx = idx;
-          }
-        });
-
-        if (hoveredAltarIdx !== -1) activeAltarIdx = hoveredAltarIdx;
-        else if (closestIdx !== -1) activeAltarIdx = closestIdx;
-
-        updateFloatingPlaque(activeAltarIdx);
-
         ctx.clearRect(0, 0, W, H);
         if (bgLoaded) {
           ctx.drawImage(bgImg, 0, 0, W, H);
@@ -500,7 +391,7 @@
         AMBIENT_PILLAR_FLAMES.forEach(f => drawPixelFlame(f.x * W, f.y * H, f.size, effectTime, false, palette));
 
         CANDLESTICKS.forEach((altar, idx) => {
-          const isResonant = (idx === activeAltarIdx);
+          const isResonant = (idx === activeAltarIdx || idx === hoveredAltarIdx);
           const tb = altar.tableBounds;
           if (isResonant) {
             const cx = altar.x * W, cy = altar.y * H;
@@ -558,14 +449,13 @@
 
       canvas.addEventListener('mousemove', function(evt) {
         const pt = getNormCoords(evt);
-        if (autoFollowMouse) player.targetX = pt.x;
         const hit = findAltarAt(pt.x, pt.y);
         if (hit !== hoveredAltarIdx) {
           hoveredAltarIdx = hit;
           canvas.style.cursor = hit !== -1 ? 'pointer' : 'crosshair';
           if (hit !== -1) {
-            playGlyphChime();
-            spawnGlyphSpark(CANDLESTICKS[hit].x, CANDLESTICKS[hit].y, PALETTES[currentPaletteIdx].rune, 8);
+
+            spawnGlyphSpark(CANDLESTICKS[hit].x, CANDLESTICKS[hit].y, PALETTE.rune, 8);
           }
         }
       });
@@ -575,15 +465,15 @@
         const pt = getNormCoords(evt);
         const hit = findAltarAt(pt.x, pt.y);
         if (hit !== -1) {
-          navigateToCandlestickProject(CANDLESTICKS[hit]);
+          selectWork(hit);
         } else {
+          autoFollowMouse = true;
           player.targetX = pt.x;
         }
       });
 
       function setAutoFollow(enabled) {
         autoFollowMouse = enabled;
-        followControl.checked = enabled;
         if (!enabled) hoveredAltarIdx = -1;
       }
       function resetKeys() {
@@ -615,58 +505,12 @@
       document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
           resetKeys();
-          if (audioCtx) audioCtx.suspend();
         } else {
           lastTime = performance.now();
-          if (audioEnabled && audioCtx) audioCtx.resume();
         }
       });
 
-      document.getElementById('btn-palette-toggle').addEventListener('click', function() {
-        currentPaletteIdx = (currentPaletteIdx + 1) % PALETTES.length;
-        document.getElementById('palette-label').textContent = PALETTES[currentPaletteIdx].name;
-        playGlyphChime();
-      });
-
-      document.getElementById('btn-audio-toggle').addEventListener('click', function() {
-        initAudio();
-        if (!audioCtx) return;
-        audioEnabled = !audioEnabled;
-        this.setAttribute('aria-pressed', String(audioEnabled));
-        document.getElementById('audio-icon').textContent = audioEnabled ? '🔊' : '🔇';
-        document.getElementById('audio-label').textContent = audioEnabled ? '古琴奏鸣' : '密室古琴';
-        if (audioEnabled) {
-          playGlyphChime();
-          bgmInterval = setInterval(() => {
-            if (!audioEnabled || !audioCtx || audioCtx.state !== 'running') return;
-            const freq = BAROQUE_NOTES[bgmStep++ % BAROQUE_NOTES.length];
-            const now = audioCtx.currentTime;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(freq, now);
-            gain.gain.setValueAtTime(0.001, now);
-            gain.gain.linearRampToValueAtTime(0.03, now + 0.015);
-            gain.gain.exponentialRampToValueAtTime(0.0008, now + 0.32);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start(now);
-            osc.stop(now + 0.34);
-          }, 260);
-        } else if (bgmInterval) {
-          clearInterval(bgmInterval);
-          bgmInterval = null;
-        }
-      });
-
-      document.getElementById('chk-auto-follow').addEventListener('change', function(e) {
-        setAutoFollow(e.target.checked);
-      });
-
-      document.getElementById('btn-absorb-glyph').addEventListener('click', function() {
-        player.absorbTimer = 900;
-        playGlyphChime();
-      });
+      document.getElementById('ctrl-attack').addEventListener('click', () => { player.absorbTimer = 780; });
 
       function bindDirection(id, direction) {
         const button = document.getElementById(id);
@@ -698,52 +542,16 @@
       bindDirection('ctrl-left', 'left');
       bindDirection('ctrl-right', 'right');
       document.getElementById('ctrl-jump').addEventListener('click', jump);
-      document.getElementById('ctrl-enter').addEventListener('click', () => {
-        if (activeAltarIdx !== -1) navigateToCandlestickProject(CANDLESTICKS[activeAltarIdx]);
+      choiceButtons.forEach((button, idx) => {
+        const item = CANDLESTICKS[idx];
+        const category = document.createElement('small');
+        category.textContent = item.category;
+        button.querySelector('.work-name').replaceChildren(document.createTextNode(item.title), category);
+        button.addEventListener('click', () => selectWork(idx));
       });
-
-      // 初始化快捷按钮与下方图鉴卡片
-      const pillsWrap = document.getElementById('altar-quick-pills');
-      const gridWrap = document.getElementById('grimoire-grid');
-      CANDLESTICKS.forEach((item, idx) => {
-        const pill = document.createElement('button');
-        pill.type = 'button';
-        pill.className = 'ecclesia-btn';
-        pill.textContent = `🕯️ 0${idx + 1} ${item.title}`;
-        pill.setAttribute('aria-pressed', String(idx === activeAltarIdx));
-        pill.addEventListener('click', () => {
-          activeAltarIdx = idx;
-          hoveredAltarIdx = -1;
-          player.targetX = item.x;
-          player.x = item.x;
-          updateFloatingPlaque(idx);
-        });
-        pillsWrap.appendChild(pill);
-
-        const card = document.createElement('article');
-        card.className = 'grimoire-card work-entry';
-        card.innerHTML = `
-          <div>
-            <div class="work-number">${item.number}</div>
-            <div class="post-meta"><span>${item.category}</span><span>${item.glyphName}</span></div>
-            <h2>🕯️ ${item.title}</h2>
-            <p>${item.desc}</p>
-            <div class="work-tags">${item.tags.map(t => `<span>${t}</span>`).join('')}</div>
-          </div>
-          <a class="aside-link" href="${item.href}" ${item.external ? 'target="_blank" rel="noreferrer"' : ''}>${item.linkText}<span>↗</span></a>
-        `;
-        card.addEventListener('click', (e) => {
-          if (e.target.closest('a')) return;
-          activeAltarIdx = idx;
-          hoveredAltarIdx = -1;
-          player.targetX = item.x;
-          player.x = item.x;
-          updateFloatingPlaque(idx);
-          document.getElementById('chamber-viewport').scrollIntoView({ behavior: reducedMotion.matches ? 'auto' : 'smooth', block: 'center' });
-        });
-        gridWrap.appendChild(card);
-      });
-
-      updateFloatingPlaque(0);
+      document.querySelector('.works-help').addEventListener('toggle', resetKeys);
+      const initialWork = CANDLESTICKS.findIndex(item => '#' + item.id === location.hash);
+      selectWork(Math.max(0, initialWork), false);
+      player.x = player.targetX = CANDLESTICKS[activeAltarIdx].x;
       requestAnimationFrame(animate);
     })();

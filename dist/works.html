@@ -5,12 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <meta name="theme-color" content="#0d1015">
   <title>作品 · Lanceashire</title>
-  <meta name="description" content="Lanceashire 的个人博客。代码、随笔与收藏 — 恶魔城：被夺走的刻印密室作品集。">
+  <meta name="description" content="Lanceashire 的作品与手记。">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Noto+Serif+SC:wght@500;700&family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/works.css">
   <script src="assets/works.js" defer></script>
 </head>
@@ -35,101 +32,45 @@
     </nav>
   </header>
 
-  <main id="main" class="ecclesia-wrap">
-    <!-- 恶魔城：被夺走的刻印 顶栏状态与引言 -->
-    <div class="ecclesia-hud-bar">
-      <div>
-        <p class="ecclesia-eyebrow">◆ THE WORKSHOP · ORDER OF ECCLESIA SANCTUM</p>
-        <div class="ecclesia-title-row">
-          <h1>作品<span>。</span></h1>
-          <p class="ecclesia-subtitle">烛火之间，陈列所作。</p>
-        </div>
-      </div>
-
-      <div class="ecclesia-status-box">
-        <span class="pixel-font" style="font-size:10px;color:#f5d78e;">GOTHIC HERO LV.26</span>
-        <div class="status-meter">
-          <span class="pixel-font" style="font-size:9px;color:#ff6b7b;">HP</span>
-          <div class="meter-track"><div class="meter-fill-hp"></div></div>
-        </div>
-        <div class="status-meter">
-          <span class="pixel-font" style="font-size:9px;color:#5ce1e6;">MP</span>
-          <div class="meter-track-mp"><div class="meter-fill-mp"></div></div>
-        </div>
-        <button id="btn-palette-toggle" type="button" class="ecclesia-btn">🕯️ <span id="palette-label">圣教幽蓝</span></button>
-        <button id="btn-audio-toggle" type="button" aria-pressed="false" class="ecclesia-btn"><span id="audio-icon">🔇</span> <span id="audio-label">密室古琴</span></button>
-      </div>
-    </div>
-
-    <!-- 恶魔城密室 Canvas 主舞台 -->
-    <section class="chamber-frame" aria-label="恶魔城密室烛台交互区">
-      <div class="chamber-topbar">
-        <div>
-          <strong style="color:#f5d78e;">SANCTUM OF WORKS</strong>
-          <span id="chamber-hint" style="margin-left:0.5rem;color:#9a9183;">点击画面后按 A / D 移动，W 跳跃；点击烛台进入作品。</span>
-        </div>
-        <div class="chamber-controls-right">
-          <label style="cursor:pointer;display:inline-flex;align-items:center;gap:0.35rem;">
-            <input id="chk-auto-follow" type="checkbox" checked>
-            <span>角色跟随鼠标巡礼</span>
-          </label>
-          <button id="btn-absorb-glyph" type="button" class="ecclesia-btn-cyan">✦ 释放吸印 (↑ / R)</button>
-        </div>
-      </div>
-
-      <div id="chamber-viewport" class="chamber-viewport">
+  <main id="main" class="works-main">
+    <header class="works-intro">
+      <p class="works-eyebrow">WORKS</p>
+      <h1>作品<span>。</span></h1>
+    </header>
+    <div class="works-layout">
+      <section class="works-stage" aria-label="烛台密室">
         <div class="chamber-scene">
-        <!-- 16:9 像素密室画布 -->
-        <canvas id="chamber-canvas" width="1376" height="768" tabindex="0" aria-label="密室场景，方向键或 A、D 移动" aria-describedby="chamber-hint">可通过下方作品列表访问全部项目。</canvas>
-
-        <!-- 靠近烛台时浮现的说明铭牌 -->
-        <div id="floating-plaque" class="glyph-plaque" >
-          <div class="plaque-header">
-            <div style="display:flex;align-items:center;gap:0.5rem;">
-              <span id="plaque-glyph-icon" class="plaque-seal">印</span>
-              <div>
-                <div id="plaque-number" class="pixel-font" style="font-size:9px;color:#5ce1e6;">01 / WEBSITE</div>
-                <div id="plaque-glyph-name" style="font-size:10px;color:#c7b290;">Vol Nocturne · 夜之刻印</div>
+          <canvas id="chamber-canvas" width="1376" height="768" tabindex="0" aria-label="密室场景" aria-describedby="chamber-hint">请使用右侧作品目录。</canvas>
+        </div>
+        <div class="works-stage-footer">
+          <p id="chamber-hint">点击烛台，选择作品。</p>
+          <details class="works-help">
+            <summary>角色操作</summary>
+            <div class="works-controls">
+              <p>点击空地移动；A / D 移动，W 跳跃，R 挥剑，Enter 打开当前作品。</p>
+              <div class="works-control-buttons">
+                <button id="ctrl-left" type="button" aria-label="向左移动">←</button>
+                <button id="ctrl-jump" type="button">跳跃</button>
+                <button id="ctrl-attack" type="button">挥剑</button>
+                <button id="ctrl-right" type="button" aria-label="向右移动">→</button>
               </div>
             </div>
-            <span id="plaque-meta-badge" style="font-size:10px;padding:2px 6px;background:#1b1612;border:1px solid #5e472c;color:#e0c496;">个人博客</span>
-          </div>
-
-          <h2 id="plaque-title" class="plaque-title">夜之手记</h2>
-          <p id="plaque-desc" class="plaque-desc">像素哥特个人博客。</p>
-          <div id="plaque-tags" class="plaque-tags"></div>
-
-          <div class="plaque-footer">
-            <span>点击烛台或右侧按钮跳转</span>
-            <a id="plaque-link" href="site-notes.html" class="ecclesia-btn-cyan">
-              <span id="plaque-link-text">站点记录</span>
-              <span>↗</span>
-            </a>
-          </div>
+          </details>
         </div>
-
-        </div>
-        <!-- 底部快捷控制栏 -->
-        <div class="chamber-bottom-bar">
-          <div class="chamber-pill-group">
-            <button id="ctrl-left" type="button" aria-label="向左移动" class="ecclesia-btn pixel-font" style="font-size:10px;">◀ A</button>
-            <button id="ctrl-jump" type="button" aria-label="跳跃" class="ecclesia-btn pixel-font" style="font-size:10px;">▲ W</button>
-            <button id="ctrl-right" type="button" aria-label="向右移动" class="ecclesia-btn pixel-font" style="font-size:10px;">D ▶</button>
-            <button id="ctrl-enter" type="button" class="ecclesia-btn-cyan">🕯️ 进入当前烛台项目</button>
-          </div>
-          <div id="altar-quick-pills" class="chamber-pill-group"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 烛台作品图鉴（兼容原版列表阅读与直接跳转） -->
-    <div id="grimoire-grid" class="grimoire-grid"></div>
-    <noscript><p>作品目录：<a href="site-notes.html">夜之手记</a> · <a href="building-notes.html">密室建设笔记</a> · <a href="quiet-desktop.html">静谧桌面终端</a> · <a href="https://github.com/Lanceashire">GitHub</a></p></noscript>
-
-    <!-- 原版底部代码库链接区 -->
-    <div class="work-tail">
-      <p>代码项目。</p>
-      <a href="https://github.com/Lanceashire" target="_blank" rel="noreferrer">GitHub <span>↗</span></a>
+      </section>
+      <aside class="works-directory" aria-label="作品与手记">
+        <nav class="work-choices" aria-label="作品目录">
+          <button id="work-select-0" type="button" data-work="0" aria-pressed="true"><span class="work-index">01</span><span class="work-name">夜之手记<small>网站</small></span></button>
+          <button id="work-select-1" type="button" data-work="1" aria-pressed="false"><span class="work-index">02</span><span class="work-name">记录过程<small>技术手记</small></span></button>
+          <button id="work-select-2" type="button" data-work="2" aria-pressed="false"><span class="work-index">03</span><span class="work-name">顺手的日常<small>日常手记</small></span></button>
+          <button id="work-select-3" type="button" data-work="3" aria-pressed="false"><span class="work-index">04</span><span class="work-name">GitHub<small>更多项目</small></span></button>
+        </nav>
+        <section id="work-detail" class="work-detail" aria-labelledby="work-select-0">
+          <p id="work-description" aria-live="polite">像素哥特风格的个人博客。</p>
+          <a id="work-link" href="https://github.com/Lanceashire/jiezichuan-s-blog" target="_blank" rel="noopener noreferrer">查看源码 <span aria-hidden="true">↗</span></a>
+        </section>
+        <noscript><p class="works-noscript"><a href="https://github.com/Lanceashire/jiezichuan-s-blog">博客源码</a> · <a href="building-notes.html">记录过程</a> · <a href="quiet-desktop.html">顺手的日常</a> · <a href="https://github.com/Lanceashire">GitHub</a></p></noscript>
+      </aside>
     </div>
   </main>
 

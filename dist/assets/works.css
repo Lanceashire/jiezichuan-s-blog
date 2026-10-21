@@ -1,372 +1,42 @@
-    :root {
-      --ecclesia-bg: #080a0f;
-      --ecclesia-panel: #10141f;
-      --bronze-dark: #4a3823;
-      --bronze-mid: #8c6d46;
-      --bronze-light: #d4b483;
-      --gold-bright: #f5d78e;
-      --ecclesia-cyan: #5ce1e6;
-      --dominus-crimson: #d9384a;
-      --parchment: #e6dfd3;
-      --muted: #9a9183;
-    }
-
-    .ecclesia-wrap {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 1.5rem 1.25rem 3rem;
-    }
-
-    .ecclesia-hud-bar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 1.25rem;
-      padding-bottom: 0.85rem;
-      border-bottom: 1px solid rgba(140, 109, 70, 0.35);
-    }
-
-    .ecclesia-eyebrow {
-      font-family: 'Cinzel', serif;
-      font-size: 0.75rem;
-      letter-spacing: 0.24em;
-      color: var(--ecclesia-cyan);
-      margin: 0 0 0.35rem;
-      text-transform: uppercase;
-    }
-
-    .ecclesia-title-row {
-      display: flex;
-       flex-wrap: wrap;
-      align-items: baseline;
-      gap: 0.75rem;
-    }
-
-    .ecclesia-title-row h1 {
-      margin: 0;
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
-      color: #f5ede0;
-    }
-
-    .ecclesia-title-row h1 span {
-      color: var(--dominus-crimson);
-    }
-
-    .ecclesia-subtitle {
-      margin: 0;
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
-
-    .ecclesia-status-box {
-      display: flex;
-      align-items: center;
-      gap: 0.9rem;
-      background: linear-gradient(180deg, rgba(20, 25, 36, 0.95), rgba(10, 13, 20, 0.98));
-      border: 1px solid var(--bronze-mid);
-      box-shadow: 0 0 0 1px #05070a, inset 0 0 12px rgba(212, 180, 131, 0.12);
-      padding: 0.5rem 0.85rem;
-      font-size: 0.75rem;
-    }
-
-    .pixel-font {
-      font-family: 'Press Start 2P', monospace;
-    }
-
-    .status-meter {
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-
-    .meter-track {
-      width: 68px;
-      height: 8px;
-      background: #140b10;
-      border: 1px solid #6b222c;
-      overflow: hidden;
-    }
-
-    .meter-fill-hp {
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, #8f1d2c, #f24c61);
-    }
-
-    .meter-track-mp {
-      width: 68px;
-      height: 8px;
-      background: #0a1824;
-      border: 1px solid #246175;
-      overflow: hidden;
-    }
-
-    .meter-fill-mp {
-      width: 90%;
-      height: 100%;
-      background: linear-gradient(90deg, #1b6ca8, #5ce1e6);
-    }
-
-    /* Main Secret Chamber Stage */
-    .chamber-frame {
-      position: relative;
-      background: #07090e;
-      border: 2px solid var(--bronze-mid);
-      box-shadow:
-        0 0 0 2px #05070a,
-        0 0 0 4px var(--bronze-dark),
-        0 20px 50px rgba(0, 0, 0, 0.85);
-      margin-bottom: 2rem;
-    }
-
-    .chamber-topbar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-      padding: 0.45rem 0.85rem;
-      background: #080a0f;
-      border-bottom: 1px solid #3d2e1e;
-      font-size: 0.75rem;
-      color: #c8b698;
-    }
-
-    .chamber-controls-right {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .ecclesia-btn {
-      background: linear-gradient(180deg, #231d18 0%, #14110f 100%);
-      border: 1px solid var(--bronze-mid);
-      color: var(--bronze-light);
-      padding: 0.28rem 0.65rem;
-      font-size: 0.75rem;
-      cursor: pointer;
-      transition: all 0.18s ease;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-
-    .ecclesia-btn:hover {
-      border-color: var(--gold-bright);
-      color: #fff;
-      box-shadow: 0 0 10px rgba(212, 180, 131, 0.35);
-    }
-
-    .ecclesia-btn-cyan {
-      background: linear-gradient(180deg, rgba(22, 56, 78, 0.92) 0%, rgba(12, 29, 44, 0.98) 100%);
-      border: 1px solid var(--ecclesia-cyan);
-      color: #dffbff;
-      padding: 0.32rem 0.75rem;
-      font-size: 0.75rem;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      box-shadow: 0 0 10px rgba(92, 225, 230, 0.2);
-      transition: all 0.18s ease;
-    }
-
-    .ecclesia-btn-cyan:hover {
-      box-shadow: 0 0 16px rgba(92, 225, 230, 0.5);
-      color: #fff;
-    }
-
-    .chamber-viewport {
-      position: relative;
-      width: 100%;
-      background: #07090e;
-      overflow: hidden;
-      user-select: none;
-    }
-
-    #chamber-canvas {
-      display: block;
-      width: 100%;
-      height: auto;
-      image-rendering: pixelated;
-      image-rendering: crisp-edges;
-      cursor: crosshair;
-    }
-
-    /* Floating Lore Plaque when approaching a candlestick */
-    .glyph-plaque {
-      position: absolute;
-      z-index: 20;
-      width: min(330px, 88vw);
-      padding: 0.9rem 1rem;
-      background: linear-gradient(180deg, rgba(14, 18, 28, 0.96) 0%, rgba(8, 10, 16, 0.98) 100%);
-      border: 1.5px solid var(--bronze-light);
-      box-shadow:
-        0 0 0 2px #06080c,
-        0 0 24px rgba(92, 225, 230, 0.28),
-        inset 0 0 18px rgba(212, 180, 131, 0.12);
-      transition: opacity 0.22s ease, left 0.22s ease, top 0.22s ease;
-      pointer-events: auto;
-    }
-
-    .glyph-plaque.hidden-plaque {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .plaque-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-      border-bottom: 1px solid #4a3823;
-      padding-bottom: 0.45rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .plaque-seal {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: #112233;
-      border: 1px solid var(--ecclesia-cyan);
-      color: var(--ecclesia-cyan);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      box-shadow: 0 0 8px rgba(92, 225, 230, 0.4);
-    }
-
-    .plaque-title {
-      margin: 0 0 0.3rem;
-      font-size: 1.08rem;
-      color: #f7efe2;
-    }
-
-    .plaque-desc {
-      margin: 0 0 0.65rem;
-      font-size: 0.8rem;
-      line-height: 1.55;
-      color: #c7c0b3;
-    }
-
-    .plaque-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem;
-      margin-bottom: 0.7rem;
-    }
-
-    .plaque-tag {
-      font-size: 0.68rem;
-      padding: 0.1rem 0.4rem;
-      background: #121824;
-      border: 1px solid #3a4b63;
-      color: #8ce7eb;
-    }
-
-    .plaque-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-top: 0.45rem;
-      border-top: 1px solid #2d2419;
-      font-size: 0.72rem;
-      color: #9c8d77;
-    }
-
-    .chamber-bottom-bar {
-      position: absolute;
-      bottom: 0.6rem;
-      left: 0.6rem;
-      right: 0.6rem;
-      z-index: 10;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-      pointer-events: none;
-    }
-
-    .chamber-pill-group {
-      pointer-events: auto;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.35rem;
-      background: rgba(9, 12, 18, 0.86);
-      border: 1px solid #4a3823;
-      padding: 0.25rem 0.45rem;
-      backdrop-filter: blur(4px);
-    }
-
-    /* Classical Grimoire List below Canvas */
-    .grimoire-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    .grimoire-card {
-      background: linear-gradient(180deg, rgba(20, 25, 36, 0.95), rgba(11, 14, 21, 0.98));
-      border: 1px solid var(--bronze-mid);
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: border-color 0.2s ease, transform 0.2s ease;
-      cursor: pointer;
-    }
-
-    .grimoire-card:hover,
-    .grimoire-card.active-card {
-      border-color: var(--ecclesia-cyan);
-      box-shadow: 0 0 15px rgba(92, 225, 230, 0.18);
-    }
-
-    /* Integration with the blog layout and touch screens. */
-    .ecclesia-wrap { min-width: 0; }
-    .ecclesia-status-box { flex-wrap: wrap; max-width: 100%; gap: .6rem .9rem; }
-    .ecclesia-status-box > .pixel-font { white-space: nowrap; }
-    .chamber-scene { position: relative; }
-    #chamber-canvas:focus-visible { outline: 2px solid var(--ecclesia-cyan); outline-offset: -4px; }
-    .glyph-plaque { width: min(300px, calc(100% - 24px)); transform: none !important; transition: opacity .22s ease; }
-    .glyph-plaque[hidden] { display: none; }
-    .plaque-header > div { min-width: 0; }
-    #plaque-meta-badge { max-width: 42%; }
-    .chamber-bottom-bar { position: static; padding: .6rem; background: #090c12; border-top: 1px solid #3d2e1e; }
-    .chamber-pill-group { max-width: 100%; }
-    .chamber-pill-group button { min-height: 36px; }
-    #ctrl-left, #ctrl-right { touch-action: none; }
-    .ecclesia-btn:focus-visible, .ecclesia-btn-cyan:focus-visible { outline: 2px solid var(--ecclesia-cyan); outline-offset: 3px; }
-    #altar-quick-pills [aria-pressed="true"] { border-color: var(--ecclesia-cyan); color: #dffbff; }
-    .grimoire-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
-    .grimoire-card.work-entry { min-width: 0; gap: 0; padding: 1rem; border: 1px solid var(--bronze-mid); }
-    .grimoire-card.work-entry h2 { font-size: 22px; line-height: 1.6; overflow-wrap: anywhere; }
-    .grimoire-card .post-meta { flex-wrap: wrap; gap: .25rem .75rem; font-size: 10px; }
-    .grimoire-card .work-number { font-size: 10px; letter-spacing: 1px; }
-    .grimoire-card .work-tags { flex-wrap: wrap; gap: .5rem .9rem; margin: 1rem 0; line-height: 1.8; }
-    @media (max-width: 700px) {
-      .ecclesia-wrap { padding: 1.5rem 1.25rem 2rem; }
-      .ecclesia-eyebrow { font-size: 10px; letter-spacing: .12em; }
-      .ecclesia-status-box { width: 100%; }
-      .chamber-controls-right { flex-wrap: wrap; }
-      .glyph-plaque { position: relative; left: auto !important; top: auto !important; width: auto; margin: .6rem; }
-      .chamber-bottom-bar { align-items: stretch; }
-      .chamber-pill-group { width: 100%; }
-      #altar-quick-pills { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      #altar-quick-pills button { justify-content: center; overflow-wrap: anywhere; }
-      .grimoire-card.work-entry { display: flex; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .ecclesia-wrap *, .ecclesia-wrap *::before { transition: none !important; }
-    }
-
-.grimoire-card.work-entry.active-card, .grimoire-card.work-entry:hover { border-color: var(--ecclesia-cyan); }
+/* Works: the chamber is the canvas; the directory stays outside the artwork. */
+.works-page { --works-gold:#cbb58b; --works-muted:#9298aa; --works-line:#4c4851; --works-cyan:#8dc8cc; }
+.works-main { max-width:1280px; width:calc(100% - 100px); margin:auto; padding:42px 0 64px; }
+.works-intro { margin-bottom:26px; }
+.works-eyebrow { font:10px/1.8 Zpix,monospace; letter-spacing:3px; color:#8e8fa5; margin-bottom:8px; }
+.works-intro h1 { font:32px/1.5 Zpix,monospace; color:#e2d9c9; }
+.works-intro h1 span { color:var(--works-gold); }
+.works-layout { display:grid; grid-template-columns:minmax(0,1fr) 268px; gap:30px; align-items:start; }
+.works-stage { min-width:0; border:1px solid #75634a; padding:5px; background:#090d15; box-shadow:inset 0 0 0 2px #151923,0 16px 40px #05070c35; }
+.chamber-scene { position:relative; background:#090d15 url('ecclesia-chamber-bg.jpg') center/cover; }
+#chamber-canvas { display:block; width:100%; height:auto; image-rendering:pixelated; cursor:crosshair; }
+#chamber-canvas:focus-visible { outline:2px solid var(--works-cyan); outline-offset:-3px; }
+.works-stage-footer { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; padding:13px 12px 9px; }
+#chamber-hint { color:var(--works-muted); font-size:12px; }
+.works-help { flex-shrink:0; max-width:100%; color:#b2ad9f; font-size:12px; }
+.works-help summary { cursor:pointer; padding:0 2px; }
+.works-help summary:hover { color:var(--works-gold); }
+.works-help[open] { flex:1; }
+.works-controls { padding-top:12px; color:var(--works-muted); max-width:350px; }
+.works-control-buttons { display:flex; gap:8px; margin-top:12px; }
+.works-control-buttons button { min-height:40px; min-width:42px; padding:7px 12px; background:#161b27; border:1px solid #53505b; color:#d6c9ae; cursor:pointer; font:12px Zpix,monospace; }
+#ctrl-left,#ctrl-right { touch-action:none; }
+.works-control-buttons button:hover { border-color:var(--works-gold); }
+.works-directory { min-width:0; border-top:1px solid var(--works-line); }
+.work-choices { display:flex; flex-direction:column; }
+.work-choices button { width:100%; display:grid; grid-template-columns:26px minmax(0,1fr); align-items:center; gap:12px; text-align:left; padding:17px 12px; border:0; border-bottom:1px solid #353544; color:#aaaabd; background:transparent; cursor:pointer; }
+.work-index { font:10px Zpix,monospace; color:#72778f; }
+.work-name { font:18px/1.5 Zpix,monospace; overflow-wrap:anywhere; }
+.work-name small { display:block; font:11px/1.8 system-ui,sans-serif; margin-top:4px; color:#7d859c; }
+.work-choices button:hover { background:#cbb58b06; color:#e0d1b4; }
+.work-choices button[aria-pressed=true] { background:#cbb58b0b; box-shadow:inset 2px 0 var(--works-gold); color:#e0c99e; }
+.work-choices button[aria-pressed=true] .work-index { color:var(--works-gold); }
+.work-detail { padding:22px 12px 10px; }
+#work-description { min-height:44px; color:#a0a6bb; font-size:13px; line-height:1.9; }
+#work-link { display:flex; justify-content:space-between; align-items:center; gap:12px; border-bottom:1px solid #6b5e4a; padding:12px 0; margin-top:12px; color:#dbc393; font:12px/1.8 Zpix,monospace; }
+#work-link:hover { color:#f1dab1; border-color:var(--works-gold); }
+.works-main button:focus-visible,.works-help summary:focus-visible { outline:2px solid var(--works-cyan); outline-offset:3px; }
+.works-noscript { padding:12px; color:var(--works-gold); }
+@media(max-width:1100px) { .works-main { width:calc(100% - 64px); } .works-layout { grid-template-columns:minmax(0,1fr) 230px; gap:22px; } }
+@media(max-width:900px) { .works-layout { grid-template-columns:minmax(0,1fr); gap:26px; } .work-choices { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); } .work-choices button { padding:15px 12px; } .work-detail { display:flex; align-items:center; justify-content:space-between; gap:24px; padding:18px 12px; } #work-description { min-height:0; } #work-link { flex-shrink:0; gap:28px; margin-top:0; padding:8px 0; } }
+@media(max-width:700px) { .works-main { width:calc(100% - 40px); padding:28px 0 38px; } .works-intro { margin-bottom:20px; } .works-intro h1 { font-size:26px; } .works-layout { gap:22px; } .works-stage-footer { padding:12px 8px 7px; gap:10px; flex-wrap:wrap; } #chamber-hint,.works-help { font-size:11px; } .works-help[open] { flex-basis:100%; } .work-choices button { grid-template-columns:20px minmax(0,1fr); gap:8px; padding:14px 10px; min-height:78px; } .work-name { font-size:16px; } .work-name small { font-size:10px; } .work-detail { align-items:flex-start; padding:18px 10px 5px; gap:16px; } #work-description { font-size:12px; } #work-link { font-size:11px; gap:12px; } }
+@media(prefers-reduced-motion:reduce) { .works-main * { scroll-behavior:auto; } }
