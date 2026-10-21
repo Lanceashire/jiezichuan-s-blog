@@ -104,7 +104,7 @@ body #myhkplayer .myhkplayer {
   border:1px solid #8f7854!important;
   border-radius:0!important;
   background:
-    url('music/gothic-frame.svg?v=20261021-reliquary2') center/100% 100% no-repeat,
+    url('music/gothic-frame.svg?v=20261021-reliquary3') center/100% 100% no-repeat,
     radial-gradient(circle at 74% 16%,#6e26352b 0 9%,transparent 34%),
     radial-gradient(circle at 21% 34%,#284d5740 0 8%,transparent 34%),
     linear-gradient(158deg,#111522f7 0%,#0a0c14fb 56%,#170e17fa 100%)!important;
@@ -721,6 +721,28 @@ body #myhkplayer .myhkplaylist { scrollbar-color:#806b4b #18151e; }
   border:1px solid #806b4b!important;
   box-shadow:inset 0 0 0 3px #080a10!important;
   font:10px/1.7 Zpix,monospace!important;
+}
+#myhkKsc {
+  left:0!important;
+  right:0!important;
+  bottom:0!important;
+  width:auto!important;
+  height:52px!important;
+  z-index:2147483646!important;
+  overflow:hidden!important;
+  pointer-events:none!important;
+  background:linear-gradient(180deg,transparent 0,#080a11d9 28%,#080a11f5 100%)!important;
+  border-top:1px solid #6f5b4166!important;
+  box-shadow:0 -12px 30px #05070c66!important;
+}
+#myhkKsc .line {
+  color:#c8b898!important;
+  font:15px/52px Zpix,monospace!important;
+  letter-spacing:.03em!important;
+  text-shadow:0 1px 0 #03050a,0 0 10px #8c704144!important;
+}
+#myhkKsc .line.myhknow {
+  color:#e0c89d!important;
 }
 @media(max-width:700px) {
   body { --music-width:min(328px,calc(100vw - 14px)); }
